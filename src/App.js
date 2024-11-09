@@ -3,8 +3,9 @@ import NavBar from "./components/NavBar";
 import Main from "./components/Main";
 import Search from "./components/Search";
 import NumResults from "./components/NumResults";
-import ListBox from "./components/ListBox";
+import Box from "./components/Box";
 import WatchedBox from "./components/WatchedBox";
+import MovieList from "./components/MovieList";
 
 const tempMovieData = [
   {
@@ -63,7 +64,9 @@ export default function App() {
         <NumResults movies={movies} />
       </NavBar>
       <Main>
-        <ListBox movies={movies} />
+        <Box>
+          <MovieList movies={movies} />
+        </Box>
         <WatchedBox tempWatchedData={tempWatchedData} />
       </Main>
     </>
