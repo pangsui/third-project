@@ -9,6 +9,7 @@ export default function WatchedBox({ tempWatchedData }) {
   return (
     <div className="box">
       <button
+        type="button"
         className="btn-toggle"
         onClick={() => setIsOpen2((open) => !open)}
       >

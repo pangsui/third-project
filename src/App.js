@@ -1,9 +1,10 @@
 import { useState } from "react";
 import NavBar from "./components/NavBar";
 import Main from "./components/Main";
-import Logo from "./components/Logo";
 import Search from "./components/Search";
 import NumResults from "./components/NumResults";
+import ListBox from "./components/ListBox";
+import WatchedBox from "./components/WatchedBox";
 
 const tempMovieData = [
   {
@@ -57,12 +58,14 @@ export default function App() {
 
   return (
     <>
-      <NavBar movies={movies}>
-        <Logo />
+      <NavBar>
         <Search />
         <NumResults movies={movies} />
       </NavBar>
-      <Main movies={movies} tempWatchedData={tempWatchedData} />
+      <Main>
+        <ListBox movies={movies} />
+        <WatchedBox tempWatchedData={tempWatchedData} />
+      </Main>
     </>
   );
 }
