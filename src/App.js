@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 import Main from "./components/Main";
 import Search from "./components/Search";
@@ -6,6 +6,9 @@ import NumResults from "./components/NumResults";
 import Box from "./components/Box";
 import WatchedBox from "./components/WatchedBox";
 import MovieList from "./components/MovieList";
+import Loader from "./components/Loader";
+import ErrorMge from "./components/ErrorMge";
+import StartSearching from "./components/StartSearching";
 
 const tempMovieData = [
   {
@@ -54,19 +57,59 @@ const tempWatchedData = [
   },
 ];
 
+const KEY = "8d46b768";
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [query, setQuery] = useState("");
+  const temQuery = "interstellar";
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setError("");
+        const res = await fetch(
+          ` http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+        );
+        if (!res.ok) throw new Error("Something went wrong.");
+        const data = await res.json();
+        if (data.Response === "False") throw new Error("Movie not found");
+        setMovies(data.Search);
+        setIsLoading(false);
+      } catch (err) {
+        console.error(err.message);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    if (query.length === 0) {
+      setError("");
+      setMovies([]);
+      return;
+    }
+    fetchData();
+  }, [query]);
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
       <Main>
-        <Box>
-          <MovieList movies={movies} />
-        </Box>
+        {query.length > 0 ? (
+          <Box>
+            {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
+            {isLoading && <Loader />}
+            {!error && !isLoading && <MovieList movies={movies} />}
+            {error && <ErrorMge message={error} />}
+          </Box>
+        ) : (
+          <StartSearching />
+        )}
         <WatchedBox tempWatchedData={tempWatchedData} />
       </Main>
     </>
