@@ -62,12 +62,11 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
     display: "block",
     cursor: "pointer",
     border: "none",
-    background: "white",
     color: color,
   };
   return (
-    <button
-      type="button"
+    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+    <div
       style={starStyle}
       onClick={onRate}
       onMouseEnter={onHoverIn}
@@ -99,6 +98,6 @@ function Star({ onRate, full, onHoverIn, onHoverOut, color, size }) {
           />
         </svg>
       )}
-    </button>
+    </div>
   );
 }

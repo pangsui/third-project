@@ -4,7 +4,7 @@ import WatchedSummary from "./WatchedSummary";
 
 export default function WatchedBox({ tempWatchedData }) {
   const [isOpen2, setIsOpen2] = useState(true);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [watched, setWatched] = useState([]);
 
   return (
     <div className="box">

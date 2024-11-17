@@ -9,6 +9,7 @@ import MovieList from "./components/MovieList";
 import Loader from "./components/Loader";
 import ErrorMge from "./components/ErrorMge";
 import StartSearching from "./components/StartSearching";
+import MovieDetails from "./components/MovieDetails";
 
 const tempMovieData = [
   {
@@ -63,8 +64,15 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
-  const temQuery = "interstellar";
+  const [selectedId, setSelectedId] = useState(null);
 
+  function handleSelectMovie(id) {
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  }
+
+  function handleCloseMovie() {
+    setSelectedId(null);
+  }
   useEffect(() => {
     async function fetchData() {
       try {
@@ -104,13 +112,22 @@ export default function App() {
           <Box>
             {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
             {isLoading && <Loader />}
-            {!error && !isLoading && <MovieList movies={movies} />}
+            {!error && !isLoading && (
+              <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
+            )}
             {error && <ErrorMge message={error} />}
           </Box>
         ) : (
           <StartSearching />
         )}
-        <WatchedBox tempWatchedData={tempWatchedData} />
+        {selectedId ? (
+          <MovieDetails
+            selectedId={selectedId}
+            onCloseMovie={handleCloseMovie}
+          />
+        ) : (
+          <WatchedBox tempWatchedData={tempWatchedData} />
+        )}
       </Main>
     </>
   );
