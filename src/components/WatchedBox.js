@@ -2,9 +2,8 @@ import { useState } from "react";
 import Summary from "./Summary";
 import WatchedSummary from "./WatchedSummary";
 
-export default function WatchedBox({ tempWatchedData }) {
+export default function WatchedBox({ watched }) {
   const [isOpen2, setIsOpen2] = useState(true);
-  const [watched, setWatched] = useState([]);
 
   return (
     <div className="box">
