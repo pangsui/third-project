@@ -14,6 +14,10 @@ export default function MovieDetails({
     .map((movie) => movie.imdbID)
     .some((watched) => watched === selectedId);
 
+  const watchedRating = watched.find(
+    (movie) => movie.imdbID === selectedId
+  )?.userRating;
+
   const {
     Title: title,
     Poster: poster,
@@ -92,7 +96,10 @@ export default function MovieDetails({
               )}
             </>
           ) : (
-            <p>You rated this movie already</p>
+            <p>
+              You rated this movie already with {watchedRating}
+              <span>⭐</span>
+            </p>
           )}
         </div>
         <p>
