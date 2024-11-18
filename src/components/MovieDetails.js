@@ -57,6 +57,16 @@ export default function MovieDetails({
 
     getMovieDetails();
   }, [selectedId]);
+
+  useEffect(() => {
+    if (!title) return;
+    document.title = `Movie | ${title}`;
+
+    return () => {
+      document.title = "Home | Movie";
+    };
+  }, [title]);
+
   return (
     <div className="details">
       <header>

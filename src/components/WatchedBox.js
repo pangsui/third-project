@@ -2,7 +2,7 @@ import { useState } from "react";
 import Summary from "./Summary";
 import WatchedSummary from "./WatchedSummary";
 
-export default function WatchedBox({ watched }) {
+export default function WatchedBox({ watched, onDeleteWatched }) {
   const [isOpen2, setIsOpen2] = useState(true);
 
   return (
@@ -19,7 +19,11 @@ export default function WatchedBox({ watched }) {
           <Summary watched={watched} />
           <ul className="list">
             {watched.map((movie) => (
-              <WatchedSummary movie={movie} key={movie.imdbID} />
+              <WatchedSummary
+                movie={movie}
+                key={movie.imdbID}
+                onDeleteWatched={onDeleteWatched}
+              />
             ))}
           </ul>
         </>
