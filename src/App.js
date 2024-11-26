@@ -81,12 +81,11 @@ export default function App() {
 			<Main>
 				{query.length > 0 ? (
 					<Box>
-						{/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
+						{error && <ErrorMge message={error} />}
 						{isLoading && <Loader />}
 						{!error && !isLoading && (
 							<MovieList movies={movies} onSelectMovie={handleSelectMovie} />
 						)}
-						{error && <ErrorMge message={error} />}
 					</Box>
 				) : (
 					<StartSearching />
