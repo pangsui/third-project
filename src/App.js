@@ -18,7 +18,10 @@ export default function App() {
 	const [error, setError] = useState("");
 	const [query, setQuery] = useState("");
 	const [selectedId, setSelectedId] = useState(null);
-	const [watched, setWatched] = useState([]);
+	const [watched, setWatched] = useState(() => {
+		const storedWatched = localStorage.getItem("watched");
+		return storedWatched ? JSON.parse(storedWatched) : [];
+	});
 
 	function handleSelectMovie(id) {
 		setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -35,6 +38,10 @@ export default function App() {
 	function handleDeleteWatch(id) {
 		setWatched(watched.filter((watched) => watched.imdbID !== id));
 	}
+
+	useEffect(() => {
+		localStorage.setItem("watched", JSON.stringify(watched));
+	}, [watched]);
 
 	useEffect(() => {
 		// AbortController is a browser API  used to cancel the fetch request when the component is unmounted.
